@@ -63,12 +63,8 @@ public class SincronizacaoService {
 			  // ENVIA DADOS DA CONTA PARA O BANCO CENTRAL
 			  boolean isAccountStatus = this.bancoCentralService.atualizaConta(contaDTO);
 			  
-			  // SE FOR VALIDO STATUS RECEBIDO, CASO CONTRARIO PENDENTE
-			  if(isAccountStatus) {
-				  writeFile(file, line, contaDTO, AccountStatus.RECEBIDO);
-			  }else {
-				  writeFile(file, line, contaDTO, AccountStatus.PENDENTE);
-			  }
+			 // SALVA DADOS DA CONTA
+			  saveAccount(file, line, contaDTO, isAccountStatus);
 			  
 		  }
 	  }
@@ -77,6 +73,19 @@ public class SincronizacaoService {
 	  printAccounts();
 	  
   }
+
+
+  /**
+   * MÉTODO QUE SALVA NO ARQUIVO AS CONTAS COM SEU RESPECTIVOS STATUS
+   */
+	private void saveAccount(File file, int line, ContaDTO contaDTO, boolean isAccountStatus) {
+		// SE FOR VALIDO STATUS RECEBIDO, CASO CONTRARIO PENDENTE
+		  if(isAccountStatus) {
+			  writeFile(file, line, contaDTO, AccountStatus.RECEBIDO);
+		  }else {
+			  writeFile(file, line, contaDTO, AccountStatus.PENDENTE);
+		  }
+	}
   
 
   /**
