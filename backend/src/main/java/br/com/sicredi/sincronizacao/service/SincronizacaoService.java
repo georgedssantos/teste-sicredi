@@ -60,8 +60,11 @@ public class SincronizacaoService {
 			  // PREENCHE OBJETO CONTA
 			  ContaDTO contaDTO = new ContaDTO(agencia, conta, saldo);
 			  
+			  // ENVIA DADOS DA CONTA PARA O BANCO CENTRAL
+			  boolean isAccountStatus = this.bancoCentralService.atualizaConta(contaDTO);
+			  
 			  // SE FOR VALIDO STATUS RECEBIDO, CASO CONTRARIO PENDENTE
-			  if(this.bancoCentralService.atualizaConta(contaDTO)) {
+			  if(isAccountStatus) {
 				  writeFile(file, line, contaDTO, AccountStatus.RECEBIDO);
 			  }else {
 				  writeFile(file, line, contaDTO, AccountStatus.PENDENTE);
